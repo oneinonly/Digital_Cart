@@ -1,0 +1,2 @@
+- [x] Fix the malformed Django template tag in templates/store/store.html: change {{ % url 'Store'% }} to {% url 'store' %}
+- [x] Fix the malformed Django template tag in templates/includes/navbar.html: change {{% url 'store' %}} to {% url 'store' %}
