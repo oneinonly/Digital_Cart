@@ -1,2 +1,2 @@
-- [x] Fix the malformed Django template tag in templates/store/store.html: change {{ % url 'Store'% }} to {% url 'store' %}
-- [x] Fix the malformed Django template tag in templates/includes/navbar.html: change {{% url 'store' %}} to {% url 'store' %}
+- [x] Fix the URL name for product_detail in store/urls.py from 'products_by_category' to 'product_detail'
+- [x] Change the product_slug parameter from <slug:product_slug> to <str:product_slug> to allow dots in the slug

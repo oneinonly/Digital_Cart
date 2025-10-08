@@ -27,6 +27,9 @@ def store(request, category_slug=None):
 def product_detail(request, category_slug, product_slug):
     try:
         single_product = Product.objects.get(category__slug=category_slug, slug=product_slug)
+    except Product.DoesNotExist:
+        from django.http import Http404
+        raise Http404("Product matching query does not exist.")
     except Exception as e:
         raise e
     
