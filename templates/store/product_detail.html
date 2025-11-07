@@ -23,7 +23,8 @@
 
         <!-- ========== RIGHT: PRODUCT DETAILS ========== -->
         <main class="col-md-6 border-left">
-          <form action="{% url 'add_cart' single_product.id %}" method="get">
+          <form action="{% url 'add_cart' single_product.id %}" method="POST">
+            {% csrf_token %}
             <article class="content-body">
 
               <!-- PRODUCT NAME -->
@@ -43,29 +44,27 @@
               <div class="row mb-3">
                 <div class="item-option-select">
                   <h6>Choose Color</h6>
-				  <select name="color" id="">
-					<option value="red"> Red</option>
-					<option value="yello"> Yellow </option>
-					<option value="blue"> Blue </option>
-					<option value="green"> Green </option>
-					<option value="black"> Black </option>
-					<option value="white"> White </option>
-				  </select>
+                    <select name="color" required>
+                      <option value="disabled selected"> Select Color </option>
+                      {% for i in single_product.variation_set.colors %}
+                       <option value="{{i.variation_value | lower}}"> {{i.variation_value | capfirst}} </option>
+                      {% endfor %}
+                    </select>
                 </div>
               </div>
 
-              <!-- SIZE OPTIONS -->
-              <div class="row mb-3">
+               <!-- SIZE OPTIONS -->
+               <div class="row mb-3">
                 <div class="item-option-select">
                   <h6>Select Size</h6>
-				  <select name="size" id="">
-					<option value="S"> Small </option>
-					<option value="M"> Medium </option>
-					<option value="L"> Large </option>
-					<option value="XL"> Extra Large </option>
-				</select>
+                    <select name="size" required>
+                    <option value="disabled selected"> Select Size </option>
+                    {% for i in single_product.variation_set.sizes %}
+                    <option value="{{i.variation_value | lower}} "> {{i.variation_value | capfirst}} </option>
+                    {% endfor %}              
+                  </select>
                 </div>
-              </div>
+              </div>  
 
               <hr>
 
@@ -73,24 +72,14 @@
               {% if single_product.stock <= 0 %}
                 <h5 class="text-danger">Out of Stock</h5>
               {% else %}
-                {% if in_cart %}
-                  <!-- Product already in cart -->
-                  <a href="#" class="btn btn-success">
-                    <span class="text">Added to Cart</span>
-                    <i class="fas fa-check"></i>
-                  </a>
-                  <a href="{% url 'cart' %}" class="btn btn-outline-primary">
-                    <span class="text">View Cart</span>
-                    <i class="fas fa-eye"></i>
-                  </a>
-                {% else %}
+                       
                   <!-- Add to Cart button -->
                   <button type="submit"  class="btn btn-primary">
                     <span class="text">Add to Cart</span>
                     <i class="fas fa-shopping-cart"></i>
                   </button>
                 {% endif %}
-              {% endif %}
+             
 
               <!-- Wishlist Button -->
               <a href="#" class="btn btn-light">
